@@ -58,7 +58,19 @@ body{
 	left: -65px;
 }
 .menubutton{
-	background: #528BFF;
+	background: #ff921d;
+	padding: 10px 20px;
+	font-size: 30px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.3s, color 0.3s;
+	position: absolute;
+	top: calc(30% + 230px);
+	text-align: center;
+}
+
+
+.imagenbutton{
 	padding: 10px 20px;
 	font-size: 30px;
 	border-radius: 5px;
@@ -69,7 +81,7 @@ body{
 	text-align: center;
 }
 .menubutton:hover{
-	background: #526AFF;
+	background: #aaff7a;
 }
 .start-menubutton{
 	right: calc(10% + 100px);
@@ -99,6 +111,21 @@ body{
 	top: 15px;
 	left: 100px;
 	width: 30px;
+}
+
+.vida-menubutton{
+	top: 10px;
+	left: 200px;
+	width: 133px;
+	height: 48px;
+}
+
+
+.tiempo-menubutton{
+	top: 15px;
+	left: 450px;
+	width: 100px;
+
 }
 .nextlevel-menubutton{
 	top: 15px;

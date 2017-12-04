@@ -1,7 +1,7 @@
 <html>
 
     <head>
-		<title>JSRobot</title>
+		<title>Game of Code</title>
 
 
   <link rel="stylesheet" href="codemirror/lib/codemirror.css">
@@ -18,23 +18,7 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 
 
-<link rel="apple-touch-icon" sizes="57x57" href="icon/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="icon/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="icon/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="icon/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="icon/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="icon/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="icon/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="icon/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="icon/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="icon/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="icon/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
-<link rel="manifest" href="icon/manifest.json">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="icon/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" sizes="32x32" href="icon/robot1.ico">
 
 
     </head>
@@ -42,10 +26,9 @@
 	<body style="background:black;" class="noselect">
 
     <div id="menu">
-      <img class="robotbig" src="images/robotbig.png">
-      <div id="speechbubble">beep boop</div>
+
       <a class="menubutton prevlevel-menubutton" id="prevlevel">&larr;</a>
-      <a class="menubutton level-menubutton" id="level">Level 1</a>
+      <a class="menubutton level-menubutton" id="level">Nivel 1</a>
       <a class="menubutton start-menubutton" id="start">Start</a>
 
     </div>
@@ -54,43 +37,50 @@
     <div id="play">
       <a class="menubutton exit-menubutton" id="backtomenu">&larr;</a>
       <a class="menubutton restartlevel-menubutton" id="restartlevel">&#10226;</a>
-      <a class="menubutton nextlevel-menubutton" id="nextlevel"> Next Level&nbsp; &rarr;</a>
+        <a class="imagenbutton vida-menubutton" id="vida"></a>
+        <a class="imagenbutton tiempo-menubutton" id="timer"></a>
+
+      <a class="menubutton nextlevel-menubutton" id="nextlevel">&rarr;</a>
 
 		<canvas id="canvasID" width="400" height="500"></canvas>
 
 		<div id="codearea" style="height: 300px;">
 				<ul id="buttonbar" class="noselect">
-						<li><a id="instructionsBtn" class="selected">Instructions</a>
-						</li><li><a id="codeBtn">Script</a>
-						</li><li><a id="commandBtn">Console</a>
-						</li><li><a id="propertiesBtn">Properties</a></li><li id="minmax">
+
+                    <li><a id="codeBtn">Código</a>
+						</li><li id="minmax">
 						<a>_</a></li>
 				</ul>
-	<div id="codeDiv" style="display: none;">
+	<div id="codeDiv" style="display: block;">
 			<textarea id="code">
-function init(robot){
-  // your code here
+//CODE
+
+
+function global(){
+var x = 3;
 }
 
-function loop(robot){
-  // your code here
+function iniciar(bunny){
+
 }
+
+function loop(bunny){
+
+}
+//CODE
 </textarea>
 		<a id="submitCode" class="noselect">Apply</a>
 	</div>
-		<div id="commandDiv">
-      <div id="output" class="allowselect"></div>
-      <input id="command" value="robot.move(10);">
-    </div>
-		<div id="instructionsDiv" class="allowselect" style="display: block"></div>
-		<div id="propertiesDiv"></div>
-	</div>
+            <div id="commandDiv">
+                <div id="output" class="allowselect"></div>
+                <input id="command" value="robot.move(10);">
+            </div>
+            <div id="instructionsDiv" class="allowselect" style="display: block"></div>
 
 
-  </div>
 
 
-	<script src="scripts/ui.js"></script>
+    <script src="scripts/ui.js"></script>
   <script>
 
   var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
@@ -108,3 +98,4 @@ function loop(robot){
     </body>
 
 </html>
+

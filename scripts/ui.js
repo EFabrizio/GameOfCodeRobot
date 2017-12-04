@@ -1,6 +1,6 @@
 var menu = document.getElementById("menu");
 var play = document.getElementById("play");
-var speechbubble = document.getElementById("speechbubble");
+
 
 var prevlevelButton = document.getElementById("prevlevel");
 var levelButton = document.getElementById("level");
@@ -8,13 +8,7 @@ var startButton = document.getElementById("start");
 
 var level = 1;
 
-lines = ['Beep boop!',
-			'01101000 01101001',
-			'Have a spare charger?',
-			'DESTROY. DESTROY.',
-			'Resistance is futile.',
-			'Sleep is for humans..',
-			'We\'re stealing your jobs LOL'];
+
 
 var saveCode = function(level, code)
 {
@@ -31,17 +25,20 @@ var getCode = function(level)
 	return code?code:'';
 };
 
-speechbubble.innerHTML = lines[Math.floor(Math.random() * (lines.length))];
+
 
 var maxLevels = 1;
 var levels;
+var agent;
 requirejs.config({
     baseUrl: 'scripts',
 });
 
 requirejs(['mozart', '../data/levels'],
   function (mozart, levelData) {
+
 		levels = (new levelData()).levels;
+
     maxLevels = levels.length;
 
 	menu.style.display = "block";
@@ -76,9 +73,7 @@ levelButton.onclick = function(){
 function startGame(level, code){
 	menu.style.display = "none";
 	play.style.display = "inherit";
-	openInstructionsDiv();
 	startLevel(level);
-	instructionsDiv.innerHTML = levels[level-1].instructions;
   if(code !== undefined && code !== ''){
     editor.setValue(code);
     openCodeDiv();
@@ -104,18 +99,40 @@ var codeDiv = document.getElementById("codeDiv");
 var command = document.getElementById("command");
 var commandDiv = document.getElementById("commandDiv");
 var buttonbar = document.getElementById("buttonbar");
-var commandBtn = document.getElementById("commandBtn");
+
 var codeBtn = document.getElementById("codeBtn");
-var propertiesBtn = document.getElementById("propertiesBtn");
-var propertiesDiv = document.getElementById("propertiesDiv");
-var instructionsBtn = document.getElementById("instructionsBtn");
-var instructionsDiv = document.getElementById("instructionsDiv");
+
+var vida = document.getElementById("vida");
+
+var timerElement = document.getElementById("timer");
+
 var minmaxBtn = document.getElementById("minmax");
 var lineheight = document.getElementById("lineheight");
 var codearea = document.getElementById("codearea");
 
 var newcode = false;
 var newcommand = "";
+
+var timer = 300, minutes, seconds;
+
+var x = setInterval(function() {
+
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        timerElement.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = 0;
+        }
+},1000);
+
+
+
+
 
 backtomenu.onclick = function(){
 	location.hash = "";
@@ -124,12 +141,12 @@ backtomenu.onclick = function(){
 
 nextlevel.onclick = function(){
 	level = Math.min(maxLevels, level + 1);
-	location.hash = "level=" + level;
+	location.hash = "Nivel=" + level;
 	location.reload();
 };
 
 restartlevel.onclick = function(){
-	location.hash = "level=" + level;
+	location.hash = "Nivel=" + level;
 	saveCode(level, editor.getValue());
 	location.reload();
 };
@@ -176,27 +193,14 @@ code.onkeydown = function(e) {
         e.preventDefault();
     }
 };
-function openInstructionsDiv(){
-	propertiesDiv.style.display = "none";
-	commandDiv.style.display = "none";
-	codeDiv.style.display = "none";
-	instructionsDiv.style.display = "block";
-	instructionsBtn.className = "selected";
-	commandBtn.className = "";
-	codeBtn.className = "";
-	propertiesBtn.className = "";
-	minmaxBtn.innerHTML = "<a>_</a>";
-	buttonbar.classList.remove("minimized");
-}
 
 function openCommandDiv(){
 	commandDiv.style.display = "block";
-	propertiesDiv.style.display = "none";
+
 	codeDiv.style.display = "none";
-	instructionsDiv.style.display = "none";
-	instructionsBtn.className = "";
+
 	codeBtn.className = "";
-	propertiesBtn.className = "";
+
 	commandBtn.className = "selected";
 	minmaxBtn.innerHTML = "<a>_</a>";
 	buttonbar.classList.remove("minimized");
@@ -204,34 +208,21 @@ function openCommandDiv(){
 }
 function openCodeDiv(){
 	codeDiv.style.display = "block";
-	propertiesDiv.style.display = "none";
+
 	commandDiv.style.display = "none";
-	instructionsDiv.style.display = "none";
-	instructionsBtn.className = "";
-	commandBtn.className = "";
-	propertiesBtn.className = "";
+
+
+
 	codeBtn.className = "selected";
 	minmaxBtn.innerHTML = "<a>_</a>";
 	buttonbar.classList.remove("minimized");
 }
-function openPropertiesDiv(){
-	propertiesDiv.style.display = "block";
-	commandDiv.style.display = "none";
-	codeDiv.style.display = "none";
-	instructionsDiv.style.display = "none";
-	instructionsBtn.className = "";
-	commandBtn.className = "";
-	codeBtn.className = "";
-	propertiesBtn.className = "selected";
-	minmaxBtn.innerHTML = "<a>_</a>";
-	buttonbar.classList.remove("minimized");
-}
+
 var oldCodeareaHeight = 0;
 function minimize(){
 	buttonbar.classList.add("minimized");
 	codeDiv.style.display = "none";
-	propertiesDiv.style.display = "none";
-	instructionsDiv.style.display = "none";
+
 	commandDiv.style.display = "none";
 	minmaxBtn.innerHTML = "<a>&#11027;</a>";
   oldCodeareaHeight = codearea.style.height;
@@ -240,35 +231,13 @@ function minimize(){
 function maximize(){
    codearea.style.height = oldCodeareaHeight;
 	buttonbar.classList.remove("minimized");
-	if(commandBtn.className == "selected"){
-		openCommandDiv();
-	}else if(codeBtn.className == "selected"){
+	 if(codeBtn.className == "selected"){
 		openCodeDiv();
-	}else if(instructionsBtn.className == "selected"){
-		openInstructionsDiv();
-	}else{
-		openPropertiesDiv();
 	}
 }
 
-instructionsBtn.onclick = function(){
-	openInstructionsDiv();
-	if(codearea.style.height == '35px'){
-		maximize();
-	}
-};
-propertiesBtn.onclick = function(){
-	openPropertiesDiv();
-	if(codearea.style.height == '35px'){
-		maximize();
-	}
-};
-commandBtn.onclick = function(){
-	openCommandDiv();
-	if(codearea.style.height == '35px'){
-		maximize();
-	}
-};
+
+
 codeBtn.onclick = function(){
 	openCodeDiv();
 	if(codearea.style.height == '35px'){
@@ -277,9 +246,7 @@ codeBtn.onclick = function(){
 };
 minmaxBtn.onclick = function(){
 	if(codeDiv.style.display == "none" &&
-			commandDiv.style.display == "none" &&
-			propertiesDiv.style.display == "none" &&
-			instructionsDiv.style.display == "none")
+			commandDiv.style.display == "none")
 	{
 		maximize();
 	}else{
@@ -318,27 +285,13 @@ onkeydown = function(e) {
     	if(e.keyCode == 13) {
 			applyScript();
 		}else if(e.keyCode == 37) {
-			if(propertiesBtn.classList.contains("selected")){
-				openCommandDiv();
-			}else if(instructionsBtn.classList.contains("selected")){
-				openPropertiesDiv();
-			}else if(commandBtn.classList.contains("selected")){
-				openCodeDiv();
-			}else if(codeBtn.classList.contains("selected")){
-				openInstructionsDiv();
-			}
+
       return false;
 		}else if(e.keyCode == 38) {
 			maximize();
       return false;
 		}else if(e.keyCode == 39) {
-			if(propertiesBtn.classList.contains("selected")){
-				openInstructionsDiv();
-			}else if(instructionsBtn.classList.contains("selected")){
-				openCodeDiv();
-			}else if(commandBtn.classList.contains("selected")){
-				openPropertiesDiv();
-			}else if(codeBtn.classList.contains("selected")){
+			if(codeBtn.classList.contains("selected")){
 				openCommandDiv();
 			}
       return false;
