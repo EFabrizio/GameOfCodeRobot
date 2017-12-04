@@ -9,6 +9,9 @@ requirejs.config({
     baseUrl: 'scripts',
 });
 
+
+
+
 function startLevel(level){
   requirejs(['mozart',
   	   	'../data/levels',
@@ -22,8 +25,7 @@ function startLevel(level){
   	   	'Effects',
   	   	'Agent'],
   function   (mozart, levelData, Behavior, Collision, builder, Engine, Body, robot, Sprite, Effects, Agent) {
-
-  	//agent = Agent;
+  		//agent = Agent.agent;
   	//Robot = robot.Robot;
   	//RobotOne = robot.RobotOne;
     levels = (new levelData()).levels;

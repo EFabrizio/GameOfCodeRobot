@@ -1,12 +1,14 @@
 define(['mozart', 'Behavior', 'Builder', 'Body'], function (mozart, behavior, Builder, Body) {
 Behavior = behavior.B;
 var agent = new Behavior(function(bodyPriv, bodyPubl){
+	var time = "var timer = document.getElementById('timer').value+3;";
 	if(!bodyPubl.isAgent()){return;}
 	robotSprite = bodyPriv.getSprite("robot");
 	gunSprite = bodyPriv.getSprite("gun");
 	deadSprite = bodyPriv.getSprite("dead");
 	winSprite = bodyPriv.getSprite("win");
-	if(bodyPriv.properties.health < 1 || bodyPriv.properties.energy < 1){robotSprite.hide(); gunSprite.hide();winSprite.hide(); deadSprite.show(); return;}
+	if(bodyPriv.properties.health < 1 || bodyPriv.properties.energy < 1 || timer == 0){
+		robotSprite.hide(); gunSprite.hide();winSprite.hide(); deadSprite.show(); return;}
 	if(bodyPriv.properties.win){robotSprite.hide(); gunSprite.hide(); deadSprite.hide();winSprite.show(); return;}
 	if(bodyPriv.properties.nextMove){
 		var options = bodyPriv.properties.nextMove.split(':');
@@ -15,7 +17,7 @@ var agent = new Behavior(function(bodyPriv, bodyPubl){
 		if(options[0] == "jump"){
 			if(bodyPubl.onGround()){
 				bodyPriv.k.ay = -15;
-				bodyPriv.properties.energy -= 1;
+				bodyPriv.properties.energy -= 2;
 			}
 		}else if(options[0] == "move"){
 			var amount = Number(options[1]);
@@ -44,7 +46,7 @@ var agent = new Behavior(function(bodyPriv, bodyPubl){
 	var logging = "outputDiv = document.getElementById('output'); console = {log: function(a){outputDiv.innerHTML += '<hr><b>&larr; ' + a + '</b>'; outputDiv.scrollTop = outputDiv.scrollHeight;}, error: function(a){outputDiv.innerHTML += '<hr><i>' + a + '</i>'; outputDiv.scrollTop = outputDiv.scrollHeight;}};";
 
 				
-	var scriptTail = "if(typeof(loop) == 'undefined'){loop = function(){}}; if(typeof(init) == 'undefined'){init = function(){}}; return {init: init, loop: loop};";
+	var scriptTail = "if(typeof(loop) == 'undefined'){loop = function(){}}; if(typeof(iniciar) == 'undefined'){init = function(){}}; return {init: iniciar, loop: loop};";
 	if(typeof newcommand !== 'undefined' && newcommand !== ""){
 		bodyPubl.command(newcommand);
 		newcommand = "";
@@ -59,7 +61,6 @@ var agent = new Behavior(function(bodyPriv, bodyPubl){
 		newcode = false;
 	}
 
-	if(propertiesDiv.style.display != "none"){
 
 			customProperties = [];
 			customFunctions = [];
@@ -81,24 +82,15 @@ var agent = new Behavior(function(bodyPriv, bodyPubl){
 				customFunctionsString += "<tr><td><b>" + prop + ": </b></td><td><b>[Function]</b></td></tr>";
 			}
 
-			propertiesDiv.innerHTML = "Robot = {<br><br><table>" +
-			"<tr><td>energy: </td><td>" + (Math.round(bodyPriv.properties.energy * 10) / 10) + "</td></tr>" +
-			"<tr><td>health: </td><td>" + (Math.round(bodyPriv.properties.health * 10) / 10) + "</td></tr>" +
-			"<tr><td>coins: </td><td>" + bodyPriv.properties.coins + "</td></tr>" +
+			vida.innerHTML = "<br><br><table>" +
+			"<tr><td>energia: </td><td>" + (Math.round(bodyPriv.properties.energy * 10) / 10) + "</td></tr>" +
+			"<tr><td>vida: </td><td>" + (Math.round(bodyPriv.properties.health * 10) / 10) + "</td></tr>" +
+			"<tr><td>monedas: </td><td>" + bodyPriv.properties.coins + "</td></tr>" +
 			"<tr><td>x: </td><td>" + (Math.round(bodyPriv.k.x * 10) / 10) + "</td></tr>" +
 			"<tr><td>y: </td><td>" + (Math.round(bodyPriv.k.y * 10) / 10) + "</td></tr>" +
-		  customPropertiesString +
-			"<tr><td>&nbsp;</td><td></td></tr>" +
-			"<tr><td>move: </td><td>[Function]</td></tr>" +
-			"<tr><td>gun:  </td><td>[Function]</td></tr>" +
-			"<tr><td>jump: </td><td>[Function]</td></tr>" +
-			"<tr><td>info: </td><td>[Function]</td></tr>" +
-			"<tr><td>turn: </td><td>[Function]</td></tr>" +
-			"<tr><td>init: </td><td>[Function]</td></tr>" +
-			"<tr><td>loop: </td><td>[Function]</td></tr>" +
-		  customFunctionsString +
-		"</table><br>}"
-}
+
+		"</table><br>"
+
 
 });
 return agent;

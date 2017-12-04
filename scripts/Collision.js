@@ -152,7 +152,7 @@ var collide = new Collision(function(bodyPriv, bodyPubl){
 			bodyPriv.properties.energy = 100;
 			continue;
 		}else if(bodyPriv.type == "battery" && col.obj2.t == "player"){
-			// objects have private engine object, use that to play effects, effects can be a private member in engine
+			// objects have private engine object, use that   to play effects, effects can be a private member in engine
 			effects.play("batterypop",{x:bodyPriv.k.x, y:bodyPriv.k.y});
 			bodyPriv.toBeDestroyed = true;
 			continue;
