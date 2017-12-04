@@ -12,6 +12,17 @@ var Robot = Body.subclass(function(prototype, _, _protected, __, __private) {
 	prototype.setOpponent = function(op){
 		__(this).opponent = op;
 	};
+
+	prototype.step = function(){
+		var _x = prototype.super.getX.call(this);
+		var _op = prototype.super.getOpponentProperties.call(this);
+		var towardopponent = (_op.x - _x) / Math.abs(_op.x - _x);
+
+		if(Math.abs(_op.x - _x) > 200){
+			_protected.super.move.call(this,towardopponent*5,0);
+		}else{
+		}
+	}
 	//prototype.getEnergy = function(){ return __(this).energy; };
 	// ^ will need to call super properties energy
 });
@@ -75,9 +86,9 @@ var RobotOne = Robot.subclass(function(prototype, _, _protected, __, __private) 
 
 
 
-
-
 /*
+
+
 var Robot = Body.subclass(function(prototype, _, _protected, __, __private) {
 	prototype.init = function(x, y, img) {
 		__(this).x = x;
@@ -128,7 +139,8 @@ var RobotOne = Robot.subclass(function(prototype, _, _protected, __, __private) 
 		}
 	}
 });
+	*/
 
-*/
+
 return {'Robot': Robot, 'RobotOne': RobotOne};
 });

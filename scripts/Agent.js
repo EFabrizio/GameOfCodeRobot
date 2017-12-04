@@ -2,12 +2,9 @@ define(['mozart', 'Behavior', 'Builder', 'Body'], function (mozart, behavior, Bu
 Behavior = behavior.B;
 
 var agent = new Behavior(function(bodyPriv, bodyPubl){
-<<<<<<< HEAD
 
-||||||| merged common ancestors
-=======
-	var time = "var timer = document.getElementById('timer').value+3;";
->>>>>>> 0867aa511f0bc9a9f52e171527b7a82ead37267f
+	var time = "var timer = document.getElementById('timer').value+3;"
+
 	if(!bodyPubl.isAgent()){return;}
 
 	robotSprite = bodyPriv.getSprite("robot");

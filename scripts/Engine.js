@@ -57,7 +57,7 @@ var Engine = mozart(function(prototype, _, _protected, __, __private) {
 			}
 		}
 		Game.flag = flag;
-        Game.flag = batteries;
+        Game.teleports = teleports;
 		Game.coins = coins;
 		Game.sparkstrips = sparkstrips;
 		Game.batteries = batteries;

@@ -164,9 +164,9 @@ var collide = new Collision(function(bodyPriv, bodyPubl){
 		//aadding the PIZZZZAAAAAAS >.< im eating pizza while im writing this lmao :,v
 		if(bodyPubl.isAgent() && col.obj2.t == "pizza"){
 			if(isNaN(bodyPriv.properties.energy)){
-				bodyPriv.properties.energy = 0;
+				bodyPriv.properties.comida = 0;
 			}
-			bodyPriv.properties.energy = 100;
+			bodyPriv.properties.comida += 1;
 			continue;
 		}else if(bodyPriv.type == "pizza" && col.obj2.t == "player"){
 			// objects have private engine object, use that to play effects, effects can be a private member in engine

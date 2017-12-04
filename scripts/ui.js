@@ -128,6 +128,7 @@ var x = setInterval(function() {
         if (--timer < 0) {
             timer = 0;
         }
+
 },1000);
 
 
