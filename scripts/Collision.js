@@ -132,8 +132,12 @@ var Collision = Behavior.subclass(function(prototype, _, _protected, __, __priva
 
 // make a collect object same as this for coins
 var collide = new Collision(function(bodyPriv, bodyPubl){
+
+
 	var pairs = collide.getPairs();
 	var col = null;
+
+
 	for(var i in pairs){
 		if(pairs[i].obj1.obj == bodyPubl){
 			col = pairs[i];
@@ -157,6 +161,33 @@ var collide = new Collision(function(bodyPriv, bodyPubl){
 			bodyPriv.toBeDestroyed = true;
 			continue;
 		}
+		//aadding the PIZZZZAAAAAAS >.< im eating pizza while im writing this lmao :,v
+		if(bodyPubl.isAgent() && col.obj2.t == "pizza"){
+			if(isNaN(bodyPriv.properties.energy)){
+				bodyPriv.properties.energy = 0;
+			}
+			bodyPriv.properties.energy = 100;
+			continue;
+		}else if(bodyPriv.type == "pizza" && col.obj2.t == "player"){
+			// objects have private engine object, use that to play effects, effects can be a private member in engine
+			effects.play("batterypop",{x:bodyPriv.k.x, y:bodyPriv.k.y});
+			bodyPriv.toBeDestroyed = true;
+			continue;
+		}
+
+
+		//adding the teleport lmao
+		if(bodyPubl.isAgent() && col.obj2.t == "teleport"){
+			bodyPriv.k.x = 100;
+			bodyPriv.k.y= 300;
+			continue;
+		}else if(bodyPriv.type == "teleport" && col.obj2.t == "player"){
+			// objects have private engine object, use that to play effects, effects can be a private member in engine
+
+
+			continue;
+		}
+
 		if(bodyPubl.isAgent() && col.obj2.t == "coin"){
 			if(isNaN(bodyPriv.properties.coins)){
 				bodyPriv.properties.coins = 0;

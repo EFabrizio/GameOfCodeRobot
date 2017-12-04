@@ -1,7 +1,10 @@
 define(['mozart', 'Behavior', 'Builder', 'Body'], function (mozart, behavior, Builder, Body) {
 Behavior = behavior.B;
+
 var agent = new Behavior(function(bodyPriv, bodyPubl){
+
 	if(!bodyPubl.isAgent()){return;}
+
 	robotSprite = bodyPriv.getSprite("robot");
 	gunSprite = bodyPriv.getSprite("gun");
 	deadSprite = bodyPriv.getSprite("dead");
@@ -11,6 +14,7 @@ var agent = new Behavior(function(bodyPriv, bodyPubl){
 	if(bodyPriv.properties.nextMove){
 		var options = bodyPriv.properties.nextMove.split(':');
 		var turned = robotSprite.getInfo().fh?-1:1;// false: right, true: left
+		var position = true;
 			if(turned<0){gunSprite.setPos(-5,0);}else{gunSprite.setPos(5,0);}
 		if(options[0] == "jump"){
 			if(bodyPubl.onGround()){
@@ -22,8 +26,13 @@ var agent = new Behavior(function(bodyPriv, bodyPubl){
 			if(Math.abs(amount) > 20){amount = 20 * Math.sign(amount);}
 			gunSprite.hide();
 			robotSprite.show();
-			bodyPriv.k.ax = amount;
-			bodyPriv.properties.energy -= Math.abs(amount)/10;
+
+			if(turned < 0) {
+				bodyPriv.k.ax = -amount;
+			}else {
+				bodyPriv.k.ax = amount;
+			}
+				bodyPriv.properties.energy -= Math.abs(amount)/10;
 		}else if(options[0] == "gun"){
 			gunSprite.show();
 			robotSprite.hide();
@@ -32,6 +41,7 @@ var agent = new Behavior(function(bodyPriv, bodyPubl){
 				{x: bodyPriv.k.x + turned * 35, y:bodyPriv.k.y, vx: turned*10, t: engine.getTime()},[{r: Math.PI*(turned-1)/2}]);
 		}else if(options[0] == "turn"){
 			turned *= -1;
+
 			robotSprite.fliph();
 			deadSprite.fliph();
 			gunSprite.fliph();

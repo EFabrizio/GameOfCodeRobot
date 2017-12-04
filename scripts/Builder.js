@@ -4,7 +4,7 @@ var Builder = mozart(function(prototype, _, _protected, __, __private) {
 	prototype.init = function() {
 		__(this).imageFiles =	["robot1", "robot1gun", "robot1dead", "robot1win", "robot2", "coin", "wall1", "wall2", "wall3",
 			   					"wall4", "wall5", "wall6", "wall7", "wall8", "wall9", "wall10", "battery",
-			   					"coinpop", "batterypop", "bullet", "sparkstrip", "spark", "bulletpop", "flag"];
+			   					"coinpop", "batterypop", "bullet", "sparkstrip", "spark", "bulletpop", "flag","pizza","teleport"];
 		__(this).images = {};
 		__(this).engine = null;
 
@@ -18,6 +18,10 @@ var Builder = mozart(function(prototype, _, _protected, __, __private) {
 			   	destheight: 20, image: "coin", numberOfFrames: 6, loop: true, ticksPerFrame: 4 }],
 		battery: [{x: 0, y: 0, width: 96, height: 24, destwidth: 16, destheight: 24, image: "battery",
 			   	numberOfFrames: 6, loop: true, ticksPerFrame: 4}],
+			teleport: [{x: 0, y: 0, width: 192, height: 48, destwidth: 32, destheight: 48, image: "teleport",
+				numberOfFrames: 6, loop: true, ticksPerFrame: 4}],
+			pizza: [{x: 0, y: 0, width: 96, height: 24, destwidth: 16, destheight: 24, image: "pizza",
+				numberOfFrames: 6, loop: true, ticksPerFrame: 4}],
 		wall: [{x: 0, y: 0, width: 50, height: 50, destwidth: 40, destheight: 40, image: "wall1" }],
 		sparkstrip: [{x: 0, y: 0, width: 84, height: 5, destwidth: 70, destheight: 12.5, image: "sparkstrip", numberOfFrames: 3, loop: true, ticksPerFrame: 2 }],
 		bullet: [{x: 0, y: 0, width: 14, height: 10, destwidth: 14, destheight: 10, image: "bullet" }],
@@ -28,6 +32,9 @@ var Builder = mozart(function(prototype, _, _protected, __, __private) {
 		player: {x:0,y:0, agent:true, type: "player", properties: {energy: 100, coins: 0, health: 100}},
 		coin: {x:0,y:0, type: "coin"},
 		battery: {x: 0, y: 0, type: "battery"},
+			pizza: {x: 0, y: 0, type: "pizza"},
+			teleport: {x: 0, y: 0, type: "teleport"},
+
 		wall: {x: 0, y: 0, fixed: true, type: "wall", mass: -1},
 		sparkstrip: {x: 0, y: 0, fixed: true, type: "sparkstrip", mass: -1},
 		bullet: {x: 0, y: 0, vx: 10, type: "bullet", mass: -1, lifetime: 100},
@@ -112,6 +119,15 @@ var Builder = mozart(function(prototype, _, _protected, __, __private) {
 			var battery = new Body(__(this).prepareObject("battery", data.batteries[b]));
 			__(this).engine.priv.add(battery);
 		}
+		for(var k in data.pizzas){
+			var pizza = new Body(__(this).prepareObject("pizza", data.pizzas[k]));
+			__(this).engine.priv.add(pizza);
+		}
+		for(var t in data.teleports){
+			var teleport = new Body(__(this).prepareObject("teleport", data.teleports[t]));
+			__(this).engine.priv.add(teleport);
+		}
+
 		for(var s in data.sparkstrips){
 			var sparkstrip = new Body(__(this).prepareObject("sparkstrip", data.sparkstrips[s]));
 			__(this).engine.priv.add(sparkstrip);

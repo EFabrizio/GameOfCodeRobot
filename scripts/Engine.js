@@ -21,6 +21,8 @@ var Engine = mozart(function(prototype, _, _protected, __, __private) {
 	__private.exportWorld = function(){
 		var coins = [];
 		var batteries = [];
+        var teleports = [];
+		var pizzas = [];
 		var walls = [];
 		var sparkstrips = [];
 		var flag = [];
@@ -40,6 +42,13 @@ var Engine = mozart(function(prototype, _, _protected, __, __private) {
 			if(t == "battery"){
 				batteries.push({x: k.x, y: k.y, vx: k.vx, vy: k.vy, ax: k.ax, ay: k.ay, w: w, h: h});
 			}
+
+            if(t == "teleport"){
+                teleports.push({x: k.x, y: k.y, vx: k.vx, vy: k.vy, ax: k.ax, ay: k.ay, w: w, h: h});
+            }
+			if(t == "pizza"){
+				continue;//pizzas.push({x: k.x, y: k.y, vx: k.vx, vy: k.vy, ax: k.ax, ay: k.ay, w: w, h: h});
+			}
 			if(t == "wall"){
 				walls.push({x: k.x, y: k.y, vx: k.vx, vy: k.vy, ax: k.ax, ay: k.ay, w: w, h: h});
 			}
@@ -48,9 +57,11 @@ var Engine = mozart(function(prototype, _, _protected, __, __private) {
 			}
 		}
 		Game.flag = flag;
+        Game.flag = batteries;
 		Game.coins = coins;
 		Game.sparkstrips = sparkstrips;
 		Game.batteries = batteries;
+		Game.pizzas = pizzas;
 		Game.walls = walls;
 	};
 
